@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package greet;
+
+option go_package = "github.com/ramyfarid922/grpc-go/greet/proto";
+
+// We could define here the different inputs we expect our GRPC service rpcs will take
+message GreetRequest {
+    string first_name = 1;
+}
+
+// Defines the different kinds of outputs we expect to send
+message GreetResponse {
+    string result = 1;
+}
+
+// Each grpc service consists of serveral rpcs
+// Synonym to a REST API server having rest endpoints
+// Probably even as well we could map a service in meaning to a resource in a REST world
+service GreetService {
+    // Unary rpc endpoint 
+    rpc Greet (GreetRequest) returns (GreetResponse);
+    // Server Streaming rpc endpoint. Server sends a stream
+    rpc GreetManyTimes (GreetRequest) returns (stream GreetResponse);
+    // Client Streaming rpc endpoint. Client sends a stream
+    rpc LongGreet (stream GreetRequest) returns (GreetResponse);
+    // rpc using deadlines
+    rpc GreetWithDeadline (GreetRequest) returns (GreetResponse);
+}

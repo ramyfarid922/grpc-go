@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package calculator;
+
+option go_package = "github.com/ramyfarid922/grpc-go/calculator/proto";
+
+import "sum.proto";
+import "primes.proto";
+import "avg.proto";
+import "sqrt.proto";
+
+service CalculatorService {
+    // Unary rpc API
+    rpc Sum(SumRequest) returns (SumResponse);
+    // Server Streaming rpc API
+    rpc Primes(PrimeRequest) returns (stream PrimeResponse);
+    // Client streaming server API
+    rpc Avg(stream AvgRequest) returns (AvgResponse);
+    // rpc endpoint to try error Handling
+    rpc Sqrt(SqrtRequest) returns (SqrtResponse);
+
+}
