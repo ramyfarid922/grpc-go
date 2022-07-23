@@ -35,7 +35,7 @@ func doGreetWithDeadline(c pb.GreetServiceClient, timeout time.Duration) {
 			log.Printf("Error message from server: %s\n", e.Message())
 			log.Printf("Error code from server: %s\n", e.Code())
 
-			if e.Code() == codes.Canceled {
+			if e.Code() == codes.DeadlineExceeded {
 				log.Println("We probably exceeded deadline!")
 				return
 			}
