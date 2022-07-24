@@ -16,6 +16,7 @@ import (
 	// Think of the pb as your gateway to your grpc services
 	pb "github.com/ramyfarid922/grpc-go/greet/proto"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 )
 
 var addr string = "0.0.0.0:50051"
@@ -34,8 +35,24 @@ func main() {
 
 	log.Printf("Listening on %s\n", addr)
 
+	opts := []grpc.ServerOption{}
+	tls := true // Change to false if needed
+
+	if tls {
+		certFile := "ssl/server.crt"
+		keyFile := "ssl/server.pem"
+		creds, err := credentials.NewServerTLSFromFile(certFile, keyFile)
+
+		if err != nil {
+			log.Fatalf("Failed loading certificates: %v\n", err)
+		}
+
+		opts = append(opts, grpc.Creds(creds))
+	}
+
 	// Now we have s, which is an rpc server but it doesn't know which grpc service to expose on the port
-	s := grpc.NewServer()
+	// The 3 dots is expanding the array into multiple func parameters
+	s := grpc.NewServer(opts...)
 
 	// We are telling the grpc server please expose or GreetService by passing the grpc server variable s
 	// to the RegisterGreetServiceServer
