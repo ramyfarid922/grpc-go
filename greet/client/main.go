@@ -40,8 +40,9 @@ func main() {
 	// Some stuff to do..
 	c := pb.NewGreetServiceClient(conn)
 
-	doGreet(c)
+	// doGreet(c)
 	// doGreetManyTimes(c)
 	// doLongGreet(c)
 	// doGreetWithDeadline(c, 2*time.Second)
+	doGreetEveryone(c)
 }
