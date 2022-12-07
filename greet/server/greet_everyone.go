@@ -28,7 +28,7 @@ func (s *Server) GreetEveryone(stream pb.GreetService_GreetEveryoneServer) error
 
 		// Construct our response of GreetResponse{} message to send it back
 		res := "Hello " + req.FirstName
-		time.Sleep(1 * time.Second)
+		time.Sleep(2 * time.Second)
 		err = stream.Send(&pb.GreetResponse{
 			Result: res,
 		})
